@@ -8,9 +8,12 @@ const Select = forwardRef(({
   helpText,
   required,
   placeholder,
+  register,
   ...rest
 }, ref) => {
   const id = `field-${name}`;
+
+  const registration = register ? register(name, { required }) : {};
 
   return (
     <div className="mb-4">
@@ -26,6 +29,7 @@ const Select = forwardRef(({
         className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary ${
           error ? 'border-error' : 'border-gray-300'
         }`}
+        {...registration}
         {...rest}
       >
         {placeholder && <option value="">{placeholder}</option>}

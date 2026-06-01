@@ -1,21 +1,39 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod'; // ✅ import Zod
 import ProgressBar from './ProgressBar';
 import StepNavigation from './StepNavigation';
 import Step1LoanType from '../../steps/Step1LoanType';
 import Step2PersonalInfo from '../../steps/Step2PersonalInfo';
-// Other steps will be imported later
-import { getStep1Schema } from '../../steps/step1Schema';
+import { getStep1SchemaWithAge } from '../../steps/step1Schema';
 import { step2Schema } from '../../steps/step2Schema';
 
-// Step registry (order, component, title, visibility condition, validation schema getter)
+// Helper: ensure every step returns a proper Zod schema
+const getValidSchema = (step, formData) => {
+  try {
+    const schema = step.validate(formData);
+    // If the step intentionally returns null (no validation), return empty schema
+    if (schema === null) {
+      return z.object({});
+    }
+    // If it's a valid Zod schema (has safeParse), return it
+    if (schema && typeof schema.safeParse === 'function') {
+      return schema;
+    }
+  } catch (err) {
+    console.error(`Error in step ${step.id} validation:`, err);
+  }
+  // Fallback: empty schema that always passes validation
+  return z.object({});
+};
+
 const STEPS = [
   {
     id: 'loan-type',
     title: 'Loan Type',
     component: Step1LoanType,
-    validate: (data) => getStep1Schema(data.loanType),
+    validate: (formData) => getStep1SchemaWithAge(formData),
     isVisible: () => true,
   },
   {
@@ -29,7 +47,7 @@ const STEPS = [
     id: 'kyc',
     title: 'KYC',
     component: () => <div className="p-4">Step 3: KYC (coming soon)</div>,
-    validate: () => null, // no validation until implemented
+    validate: () => null,
     isVisible: () => true,
   },
   {
@@ -51,9 +69,7 @@ const STEPS = [
     title: 'Co-Applicant',
     component: () => <div className="p-4">Step 6: Co-Applicant (conditional)</div>,
     validate: () => null,
-    // Example conditional visibility – will be dynamic later
     isVisible: (formData) => {
-      // Personal > 5L or Home always or Business > 20L
       const { loanType, loanAmount } = formData;
       if (loanType === 'home') return true;
       if (loanType === 'personal' && loanAmount > 500000) return true;
@@ -80,67 +96,62 @@ const STEPS = [
 export default function Wizard() {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [formData, setFormData] = useState({});
-  const formRef = useRef();
 
-  // Compute visible steps based on current form data
   const visibleSteps = STEPS.filter(step => step.isVisible(formData));
   const currentStep = visibleSteps[currentStepIndex];
   const isLastStep = currentStepIndex === visibleSteps.length - 1;
 
-  const methods = useForm({
-    defaultValues: formData,
-    resolver: async (data, context) => {
-      // Get schema for current step (if any)
-      const schema = currentStep.validate(data);
-      if (!schema) return { values: data, errors: {} };
+  // ✅ Dynamic resolver that always uses a valid Zod schema
+  const dynamicResolver = async (data, context) => {
+    const schema = getValidSchema(currentStep, data);
+    try {
       const resolver = zodResolver(schema);
       const result = await resolver(data, context);
+    // result should be { values, errors }
       return result;
-    },
-    mode: 'onChange', // re-run validation on change for real-time feedback
+    } catch (err) {
+      console.error('zodResolver error:', err);
+      return { values: data, errors: {} };
+    }
+  };
+
+  const methods = useForm({
+    defaultValues: formData,
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
+    resolver: dynamicResolver,
   });
 
-  const { handleSubmit, trigger, getValues, reset } = methods;
+  const { trigger, handleSubmit, watch } = methods;
 
-  // Keep local formData in sync with react-hook-form values
   useEffect(() => {
-    const subscription = methods.watch((value) => {
-      setFormData(value);
-    });
+    const subscription = watch((value) => setFormData(value));
     return () => subscription.unsubscribe();
-  }, [methods]);
+  }, [watch]);
 
-  // On step change, re-trigger validation for the new step (to show errors)
+  // Re-validate when DOB changes (cross-step)
   useEffect(() => {
     trigger();
-  }, [currentStepIndex, trigger]);
+  }, [formData.dateOfBirth, trigger]);
 
   const handleNext = async () => {
-    // Validate current step fields
     const isValid = await trigger();
     if (!isValid) return;
 
-    // If last step, submit the form
     if (isLastStep) {
-      handleSubmit(onSubmit)();
+      handleSubmit((data) => {
+        console.log('Final submission:', data);
+        alert('Application submitted! (demo)');
+      })();
       return;
     }
-
-    // Move to next visible step
     setCurrentStepIndex(prev => prev + 1);
-    // Optional: scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handlePrev = () => {
     setCurrentStepIndex(prev => prev - 1);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const onSubmit = (data) => {
-    console.log('Final form submission:', data);
-    alert('Application submitted successfully! (demo)');
-    // Here you would send data to backend, clear localStorage, etc.
   };
 
   const CurrentStepComponent = currentStep.component;
@@ -150,10 +161,7 @@ export default function Wizard() {
       <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
           <div className="p-6">
-            <ProgressBar
-              steps={visibleSteps}
-              currentStep={currentStepIndex}
-            />
+            <ProgressBar steps={visibleSteps} currentStep={currentStepIndex} />
             <div className="mt-8">
               <CurrentStepComponent />
             </div>

@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import { calculateAge } from './step2Schema';
+
 
 // Loan type specific rules
 const loanTypeRules = {
@@ -54,6 +56,34 @@ export const getStep1Schema = (loanType) => {
       message: `Maximum tenure for ${loanType} is ${rules.maxTenure} months`,
       path: ['loanTenure'],
     });
+};
+
+// New: schema that also validates tenure against age
+export const getStep1SchemaWithAge = (formData) => {
+  const { loanType, loanAmount, loanTenure, dateOfBirth } = formData;
+  // Base schema (amount/tenure ranges per loan type)
+  const baseSchema = getStep1Schema(loanType);
+
+  if (!dateOfBirth) return baseSchema; // no age info yet
+
+  const age = calculateAge(dateOfBirth);
+  // Convert age to months – rule: age(years) + tenure(months)/12 ≤ 65
+  const maxTenureMonths = (65 - age) * 12;
+  if (maxTenureMonths <= 0) {
+    // Age already > 65 – should be caught in Step 2, but add a refinement anyway
+    return baseSchema.refine(
+      () => false,
+      { message: `Age ${age} exceeds maximum allowed 65 years`, path: ['dateOfBirth'] }
+    );
+  }
+
+  return baseSchema.refine(
+    (data) => data.loanTenure <= maxTenureMonths,
+    {
+      message: `Based on your age (${age} years), maximum loan tenure is ${maxTenureMonths} months (${Math.floor(maxTenureMonths / 12)} years). Please reduce the tenure.`,
+      path: ['loanTenure'],
+    }
+  );
 };
 
 export { loanPurposeOptions };

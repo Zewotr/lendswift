@@ -12,6 +12,8 @@ import Step3KYC from '../../steps/Step3KYC';
 import { step3Schema } from '../../steps/step3Schema';
 import { step4Schema } from '../../steps/step4Schema';
 import Step4Address from '../../steps/Step4Address';
+import { step5Schema } from '../../steps/step5Schema';
+import Step5Employment from '../../steps/Step5Employment';
 
 // Helper: ensure every step returns a proper Zod schema
 const getValidSchema = (step, formData) => {
@@ -64,8 +66,8 @@ const STEPS = [
   {
     id: 'employment',
     title: 'Employment',
-    component: () => <div className="p-4">Step 5: Employment (coming soon)</div>,
-    validate: () => null,
+    component: Step5Employment,
+    validate: () => step5Schema,
     isVisible: () => true,
   },
   {

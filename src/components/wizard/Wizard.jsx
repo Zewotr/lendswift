@@ -18,6 +18,8 @@ import { step5Schema } from '../../steps/step5Schema';
 import { step6Schema } from '../../steps/step6Schema';
 import { useAutoSave } from '../../hooks/useAutoSave';
 import { decryptData } from '../../utils/encryption';
+import Step7Documents from '../../steps/Step7Documents';
+import { step7Schema } from '../../steps/step7Schema';
 
 // Helper to get valid schema (handles null steps)
 const getValidSchema = (step, formData) => {
@@ -90,8 +92,8 @@ const STEPS = [
   {
     id: 'documents',
     title: 'Documents',
-    component: () => <div className="p-4">Step 7: Documents & Signature (coming soon)</div>,
-    validate: () => null,
+    component: Step7Documents,
+    validate: () => step7Schema,
     isVisible: () => true,
   },
   {

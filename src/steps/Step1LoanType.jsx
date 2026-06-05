@@ -24,7 +24,7 @@ export default function Step1LoanType() {
         label="Loan Type"
         name="loanType"
         options={loanTypeOptions}
-        {...register('loanType', { required: 'Select loan type' })}
+        register={register('loanType', { required: 'Select loan type' })}
         error={errors.loanType?.message}
         required
         />
@@ -39,7 +39,6 @@ export default function Step1LoanType() {
         })}
         error={errors.loanAmount?.message}
         required
-        
         />
 
       <Input
@@ -59,7 +58,7 @@ export default function Step1LoanType() {
         label="Loan Purpose"
         name="loanPurpose"
         options={purposeOptions}
-        register={register}
+        register={register('loanPurpose', { required: 'Select loan purpose' })}
         error={errors.loanPurpose?.message}
         placeholder="Select a purpose"
         required
@@ -72,6 +71,7 @@ export default function Step1LoanType() {
         register={register('referralCode')}
         error={errors.referralCode?.message}
       />
+
     </div>
   );
 }

@@ -8,9 +8,21 @@ const Input = forwardRef(({
   error,
   helpText,
   required,
+  register,   // can be a function OR an object (from register(...))
   ...rest
 }, ref) => {
   const id = `field-${name}`;
+
+  let registration = {};
+  if (register && typeof register === 'function') {
+    // It's the register function – call it
+    registration = register(name, { required: required ? `${label} is required` : false });
+  } else if (register && typeof register === 'object') {
+    // It's already the object returned by register(...)
+    registration = register;
+  } else {
+    registration = { name };
+  }
 
   return (
     <div className="mb-4">
@@ -22,7 +34,6 @@ const Input = forwardRef(({
       <input
         ref={ref}
         id={id}
-        name={name}
         type={type}
         placeholder={placeholder}
         aria-invalid={!!error}
@@ -30,6 +41,7 @@ const Input = forwardRef(({
         className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary ${
           error ? 'border-error' : 'border-gray-300'
         }`}
+        {...registration}
         {...rest}
       />
       {helpText && !error && (

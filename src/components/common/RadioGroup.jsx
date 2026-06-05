@@ -7,9 +7,19 @@ const RadioGroup = forwardRef(({
   error,
   required,
   layout = 'horizontal',
+  register,
   ...rest
 }, ref) => {
   const id = `field-${name}`;
+
+  let registration = {};
+  if (register && typeof register === 'function') {
+    registration = register(name, { required: required ? `${label} is required` : false });
+  } else if (register && typeof register === 'object') {
+    registration = register;
+  } else {
+    registration = { name };
+  }
 
   return (
     <div className="mb-4" role="radiogroup" aria-labelledby={`${id}-label`}>
@@ -22,11 +32,10 @@ const RadioGroup = forwardRef(({
         {options.map((opt) => (
           <label key={opt.value} className="inline-flex items-center">
             <input
-              ref={ref}
               type="radio"
-              name={name}
               value={opt.value}
               className="h-4 w-4 text-primary focus:ring-primary border-gray-300"
+              {...registration}
               {...rest}
             />
             <span className="ml-2 text-sm text-gray-700">{opt.label}</span>

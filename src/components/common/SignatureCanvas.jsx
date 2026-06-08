@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import SignaturePad from 'react-signature-canvas';
 
-const SignatureCanvas = ({ onChange, error }) => {
+const SignatureCanvas = ({ onChange, error, 'data-testid': dataTestId }) => {
   const sigPadRef = useRef(null);
   const [isEmpty, setIsEmpty] = useState(true);
 
@@ -23,7 +23,7 @@ const SignatureCanvas = ({ onChange, error }) => {
   };
 
   return (
-    <div className="mb-4">
+    <div className="mb-4" data-testid={dataTestId}>
       <label className="block text-sm font-medium text-gray-700 mb-1">E‑Signature <span className="text-error">*</span></label>
       <div className="border rounded p-2 bg-white">
         <SignaturePad

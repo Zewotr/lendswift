@@ -2,7 +2,16 @@ import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { compressImage } from '../../utils/imageCompression';
 
-const FileUpload = ({ label, name, onChange, accept = ['image/jpeg', 'image/png', 'application/pdf'], maxSize = 5 * 1024 * 1024, maxFiles = 3, required = false }) => {
+const FileUpload = ({ 
+  label, 
+  name, 
+  onChange, 
+  accept = ['image/jpeg', 'image/png', 'application/pdf'], 
+  maxSize = 5 * 1024 * 1024, 
+  maxFiles = 3, 
+  required = false,
+  'data-testid': dataTestId
+}) => {
   const [files, setFiles] = useState([]);
   const [uploadProgress, setUploadProgress] = useState({});
   const [errors, setErrors] = useState([]);
@@ -40,7 +49,6 @@ const FileUpload = ({ label, name, onChange, accept = ['image/jpeg', 'image/png'
           console.error('Compression failed', err);
         }
       }
-      // Assign a unique ID for progress tracking
       processedFile.uploadId = `${name}-${Date.now()}-${Math.random()}`;
       processed.push(processedFile);
     }
@@ -50,12 +58,10 @@ const FileUpload = ({ label, name, onChange, accept = ['image/jpeg', 'image/png'
     setErrors([]);
     onChange?.(newFiles);
 
-    // Simulate upload for each new file
     for (const file of processed) {
       await simulateUpload(file.uploadId);
     }
-    // After all uploads complete, mark as uploaded
-    onChange?.(newFiles, true); // second param indicates upload complete
+    onChange?.(newFiles, true);
   }, [files, onChange, maxFiles, name]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -69,7 +75,6 @@ const FileUpload = ({ label, name, onChange, accept = ['image/jpeg', 'image/png'
     const newFiles = files.filter((_, i) => i !== index);
     setFiles(newFiles);
     onChange?.(newFiles);
-    // Remove progress for removed file
     const removedId = files[index].uploadId;
     setUploadProgress(prev => {
       const newProgress = { ...prev };
@@ -78,7 +83,7 @@ const FileUpload = ({ label, name, onChange, accept = ['image/jpeg', 'image/png'
     });
   };
 
-  const getPreview = (file, idx) => {
+  const getPreview = (file) => {
     if (file.type.startsWith('image/')) {
       return <img src={URL.createObjectURL(file)} alt="preview" className="w-16 h-16 object-cover rounded" />;
     }
@@ -92,17 +97,36 @@ const FileUpload = ({ label, name, onChange, accept = ['image/jpeg', 'image/png'
 
   return (
     <div className="mb-4">
-      {label && <label className="block text-sm font-medium text-gray-700 mb-1">{label} {required && <span className="text-error">*</span>}</label>}
-      <div {...getRootProps()} className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition ${isDragActive ? 'border-primary bg-blue-50' : 'border-gray-300 hover:border-primary'}`}>
-        <input {...getInputProps()} name={name} />
-        {isDragActive ? <p>Drop files here...</p> : <p>Drag & drop or click to upload (max {maxFiles} files, {maxSize / (1024 * 1024)}MB each)</p>}
+      {label && (
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          {label} {required && <span className="text-error">*</span>}
+        </label>
+      )}
+      <div
+        {...getRootProps()}
+        className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition ${
+          isDragActive ? 'border-primary bg-blue-50' : 'border-gray-300 hover:border-primary'
+        }`}
+      >
+        <input 
+          {...getInputProps()} 
+          name={name} 
+          data-testid={dataTestId || `file-${name}`}
+        />
+        {isDragActive ? (
+          <p>Drop files here...</p>
+        ) : (
+          <p>Drag & drop or click to upload (max {maxFiles} files, {maxSize / (1024 * 1024)}MB each)</p>
+        )}
       </div>
-      {errors.length > 0 && errors.map((err, i) => <div key={i} className="text-error text-sm mt-1">{err.name}: {err.error}</div>)}
+      {errors.length > 0 && errors.map((err, i) => (
+        <div key={i} className="text-error text-sm mt-1">{err.name}: {err.error}</div>
+      ))}
       {files.length > 0 && (
         <div className="mt-2 space-y-2">
           {files.map((file, idx) => (
             <div key={idx} className="flex items-center gap-3 p-2 border rounded">
-              {getPreview(file, idx)}
+              {getPreview(file)}
               <div className="flex-1">
                 <p className="text-sm font-medium">{file.name}</p>
                 <p className="text-xs text-gray-500">{(file.size / 1024).toFixed(0)} KB</p>
@@ -118,8 +142,12 @@ const FileUpload = ({ label, name, onChange, accept = ['image/jpeg', 'image/png'
           ))}
         </div>
       )}
-      {required && files.length === 0 && <div className="text-error text-sm mt-1">At least one file required</div>}
-      {required && files.length > 0 && !allUploaded && <div className="text-warning text-sm mt-1">Waiting for upload to complete...</div>}
+      {required && files.length === 0 && (
+        <div className="text-error text-sm mt-1">At least one file required</div>
+      )}
+      {required && files.length > 0 && !allUploaded && (
+        <div className="text-warning text-sm mt-1">Waiting for upload to complete...</div>
+      )}
     </div>
   );
 };

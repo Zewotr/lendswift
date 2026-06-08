@@ -36,6 +36,7 @@ const RadioGroup = forwardRef(({
               value={opt.value}
               className="h-4 w-4 text-primary focus:ring-primary border-gray-300"
               {...registration}
+              data-testid={opt['data-testid']} // Pass data-testid for testing
               {...rest}
             />
             <span className="ml-2 text-sm text-gray-700">{opt.label}</span>

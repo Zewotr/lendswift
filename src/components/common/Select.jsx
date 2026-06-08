@@ -14,9 +14,14 @@ const Select = forwardRef(({
     const id = `field-${name}`;
 
 
-  const fieldProps = typeof register === 'function'
-    ? register(name, { required: required ? `${label} is required` : false })
-    : { name };
+  let fieldProps = {};
+  if (register && typeof register === 'function') {
+    fieldProps = register(name, { required: required ? `${label} is required` : false });
+  } else if (register && typeof register === 'object') {
+    fieldProps = register;
+  } else {
+    fieldProps = { name };
+  }
 
   return (
     <div className="mb-4">

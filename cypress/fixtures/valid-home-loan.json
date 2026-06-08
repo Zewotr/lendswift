@@ -1,0 +1,56 @@
+{
+  "step1": {
+    "loanType": "home",
+    "amount": 5000000,
+    "tenure": 240,
+    "purpose": "Purchase"
+  },
+  "step2": {
+    "fullName": "Priya Patel",
+    "dateOfBirth": "1988-07-15",
+    "gender": "female",
+    "maritalStatus": "married",
+    "fatherName": "Rajesh Patel",
+    "motherName": "Sunita Patel",
+    "email": "priya.patel@example.com",
+    "mobileNumber": "9988776655",
+    "alternateMobile": ""
+  },
+  "step3": {
+    "pan": "FGHPI6789K",
+    "aadhaar": "234567890124",
+    "consent": true
+  },
+  "step4": {
+    "line1": "45 Green Park",
+    "line2": "Behind City Mall",
+    "pinCode": "400001",
+    "residenceType": "owned",
+    "rentAmount": null,
+    "yearsAtCurrentAddress": 8,
+    "sameAsPermanent": true
+  },
+  "step5": {
+    "employmentType": "salaried",
+    "companyName": "BuildWell Constructions",
+    "designation": "Project Manager",
+    "monthlyNetSalary": 120000,
+    "yearsOfExperience": 10,
+    "officeAddress": "BuildWell House, Fort, Mumbai"
+  },
+  "step6": {
+    "name": "Amit Patel",
+    "relationship": "spouse",
+    "pan": "LMNPP1234Q",
+    "income": 80000,
+    "consent": true
+  },
+  "documents": [
+    { "docName": "panCard", "filePath": "cypress/fixtures/pan-card.pdf" },
+    { "docName": "aadhaarCard", "filePath": "cypress/fixtures/aadhaar.pdf" },
+    { "docName": "salarySlips", "filePath": "cypress/fixtures/salary.pdf" },
+    { "docName": "bankStatements", "filePath": "cypress/fixtures/bank.pdf" },
+    { "docName": "propertyDocs", "filePath": "cypress/fixtures/property.pdf" },
+    { "docName": "photograph", "filePath": "cypress/fixtures/photo.jpg" }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "step1": {
+    "loanType": "personal",
+    "amount": 300000,
+    "tenure": 36,
+    "purpose": "Wedding"
+  },
+  "step2": {
+    "fullName": "Rahul Sharma",
+    "dateOfBirth": "1995-04-10",
+    "gender": "male",
+    "maritalStatus": "married",
+    "fatherName": "Suresh Sharma",
+    "motherName": "Geeta Sharma",
+    "email": "rahul.sharma@example.com",
+    "mobileNumber": "9876543210",
+    "alternateMobile": "9876543211"
+  },
+  "step3": {
+    "pan": "ABCPA1234F",
+    "aadhaar": "123456789010",
+    "consent": true
+  },
+  "step4": {
+    "line1": "123 MG Road",
+    "line2": "Near Metro Station",
+    "pinCode": "110001",
+    "residenceType": "owned",
+    "rentAmount": null,
+    "yearsAtCurrentAddress": 5,
+    "sameAsPermanent": true
+  },
+  "step5": {
+    "employmentType": "salaried",
+    "companyName": "TechCorp Solutions",
+    "designation": "Software Engineer",
+    "monthlyNetSalary": 75000,
+    "yearsOfExperience": 6,
+    "officeAddress": "TechCorp Tower, Connaught Place, New Delhi"
+  },
+  "step6": null,
+  "documents": [
+    { "docName": "panCard", "filePath": "cypress/fixtures/pan-card.pdf" },
+    { "docName": "aadhaarCard", "filePath": "cypress/fixtures/aadhaar.pdf" },
+    { "docName": "salarySlips", "filePath": "cypress/fixtures/salary.pdf" },
+    { "docName": "bankStatements", "filePath": "cypress/fixtures/bank.pdf" },
+    { "docName": "photograph", "filePath": "cypress/fixtures/photo.jpg" }
+  ]
+}

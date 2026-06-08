@@ -1,0 +1,60 @@
+{
+  "step1": {
+    "loanType": "business",
+    "amount": 2500000,
+    "tenure": 84,
+    "purpose": "Expansion"
+  },
+  "step2": {
+    "fullName": "Amit Gupta",
+    "dateOfBirth": "1982-03-22",
+    "gender": "male",
+    "maritalStatus": "married",
+    "fatherName": "Raj Gupta",
+    "motherName": "Neeta Gupta",
+    "email": "amit.gupta@example.com",
+    "mobileNumber": "9876501234",
+    "alternateMobile": ""
+  },
+  "step3": {
+    "pan": "ZYXPG9876R",
+    "aadhaar": "456789012341",
+    "consent": true
+  },
+  "step4": {
+    "line1": "Unit 5 Industrial Area",
+    "line2": "Phase 2",
+    "pinCode": "110002",
+    "residenceType": "owned",
+    "rentAmount": null,
+    "yearsAtCurrentAddress": 12,
+    "sameAsPermanent": true
+  },
+  "step5": {
+    "employmentType": "businessOwner",
+    "businessName": "Gupta Traders Pvt Ltd",
+    "businessType": "Trading",
+    "annualTurnover": 5000000,
+    "yearsInBusiness": 8,
+    "yearsOfExperience": 15,
+    "monthlyIncome": 150000,
+    "gstNumber": "07AAACG1234F1Z5",
+    "officeAddress": "Unit 5 Industrial Area, Phase 2, New Delhi"
+  },
+  "step6": {
+    "name": "Sunita Gupta",
+    "relationship": "spouse",
+    "pan": "ABCPE9999P",
+    "income": 60000,
+    "consent": true
+  },
+  "documents": [
+    { "docName": "panCard", "filePath": "cypress/fixtures/pan-card.pdf" },
+    { "docName": "aadhaarCard", "filePath": "cypress/fixtures/aadhaar.pdf" },
+    { "docName": "itr", "filePath": "cypress/fixtures/itr.pdf" },
+    { "docName": "bankStatements", "filePath": "cypress/fixtures/bank.pdf" },
+    { "docName": "businessReg", "filePath": "cypress/fixtures/business-reg.pdf" },
+    { "docName": "gstReturns", "filePath": "cypress/fixtures/gst.pdf" },
+    { "docName": "photograph", "filePath": "cypress/fixtures/photo.jpg" }
+  ]
+}

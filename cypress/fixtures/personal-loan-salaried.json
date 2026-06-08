@@ -1,0 +1,54 @@
+{
+  "step1": {
+    "loanType": "personal",
+    "amount": 300000,
+    "tenure": 36,
+    "purpose": "Wedding"
+  },
+  "step2": {
+    "fullName": "Rahul Sharma",
+    "dateOfBirth": "1995-04-10",
+    "gender": "Male",
+    "maritalStatus": "Married",
+    "fatherName": "Suresh Sharma",
+    "motherName": "Geeta Sharma",
+    "email": "rahul@example.com",
+    "mobileNumber": "9876543210",
+    "alternateMobile": "9876543211"
+  },
+  "step3": {
+    "pan": "ABCDE1234F",
+    "aadhaar": "123456789012",
+    "consent": true
+  },
+  "step4": {
+    "line1": "123, MG Road",
+    "line2": "",
+    "pinCode": "110001",
+    "residenceType": "owned",
+    "rentAmount": null,
+    "yearsAtCurrentAddress": 5,
+    "sameAsPermanent": false,
+    "permanentLine1": "456, Old Address",
+    "permanentPinCode": "110002"
+    },
+  "step5": {
+    "employmentType": "salaried",
+    "companyName": "TechCorp",
+    "designation": "Software Engineer",
+    "monthlyNetSalary": 75000,
+    "yearsOfExperience": 6
+  },
+  "step6": null,
+  "documents": [
+    { "docName": "panCard", "filePath": "cypress/fixtures/pan-card.pdf" },
+    { "docName": "aadhaarCard", "filePath": "cypress/fixtures/aadhaar.pdf" },
+    { "docName": "salarySlips", "filePath": "cypress/fixtures/salary.pdf" },
+    { "docName": "bankStatements", "filePath": "cypress/fixtures/bank.pdf" },
+    { "docName": "photograph", "filePath": "cypress/fixtures/photo.jpg" },
+    { "docName": "itr", "filePath": "cypress/fixtures/itr.pdf" },
+    { "docName": "propertyDocs", "filePath": "cypress/fixtures/property.pdf" },
+    { "docName": "businessReg", "filePath": "cypress/fixtures/business-reg.pdf" },
+    { "docName": "gstReturns", "filePath": "cypress/fixtures/gst.pdf" }
+  ]
+}

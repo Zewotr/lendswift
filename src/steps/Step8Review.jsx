@@ -146,19 +146,19 @@ export default function Step8Review({ onEditStep }) {
       {/* Consents */}
       <div className="space-y-2 border-t pt-4">
         <label className="flex items-start gap-2">
-          <input type="checkbox" checked={consents.accuracy} onChange={() => handleConsentChange('accuracy')} />
+          <input type="checkbox" name='consentAccuracy' checked={consents.accuracy} onChange={() => handleConsentChange('accuracy')} />
           <span className="text-sm">I confirm that all information provided is accurate and complete.</span>
         </label>
         <label className="flex items-start gap-2">
-          <input type="checkbox" checked={consents.creditCheck} onChange={() => handleConsentChange('creditCheck')} />
+          <input type="checkbox" name='consentCreditCheck' checked={consents.creditCheck} onChange={() => handleConsentChange('creditCheck')} />
           <span className="text-sm">I authorise LendSwift to check my credit score via CIBIL/Equifax.</span>
         </label>
         <label className="flex items-start gap-2">
-          <input type="checkbox" checked={consents.terms} onChange={() => handleConsentChange('terms')} />
+          <input type="checkbox" name='consentTerms' checked={consents.terms} onChange={() => handleConsentChange('terms')} />
           <span className="text-sm">I agree to the Terms and Conditions (view PDF).</span>
         </label>
         <label className="flex items-start gap-2">
-          <input type="checkbox" checked={consents.communications} onChange={() => handleConsentChange('communications')} />
+          <input type="checkbox" name='consentCommunications' checked={consents.communications} onChange={() => handleConsentChange('communications')} />
           <span className="text-sm">I consent to receive communications regarding this application.</span>
         </label>
       </div>
@@ -181,10 +181,15 @@ export default function Step8Review({ onEditStep }) {
           <div className="bg-white rounded-xl p-6 max-w-md w-full text-center">
             <div className="text-4xl mb-3">🎉</div>
             <h3 className="text-xl font-bold mb-2">Application Submitted!</h3>
-            <p className="text-gray-600 mb-4">Your application reference number:</p>
+            <p className="text-gray-600 mb-4">Application Reference Number:</p>
             <p className="text-2xl font-mono font-bold text-primary mb-4">{applicationRef}</p>
             <p className="text-sm text-gray-500 mb-4">We will review and get back to you within 3 business days.</p>
-            <button onClick={() => window.location.reload()} className="bg-primary text-white px-6 py-2 rounded-md">
+            <button
+              type="button"
+              data-testid="close-modal"
+              onClick={() => window.location.reload()}
+              className="bg-primary text-white px-6 py-2 rounded-md"
+            >
               Start New Application
             </button>
           </div>

@@ -7,13 +7,12 @@ const Step7Documents = () => {
   const { watch, setValue, formState: { errors } } = useFormContext();
   const loanType = watch('loanType');
   const employmentType = watch('employmentType');
-  const panVerified = watch('panNumber') && !watch('panNumberError');
 
   const [uploadStatus, setUploadStatus] = useState({});
 
   // Determine document requirements
   const requiredDocs = {
-    panCard: !panVerified,
+    panCard: true,
     aadhaarCard: true,
     salarySlips: employmentType === 'salaried',
     bankStatements: true,
@@ -58,6 +57,7 @@ const Step7Documents = () => {
         <FileUpload
           label="PAN Card Copy"
           name="panCard"
+          data-testid="pan-card"
           onChange={(files, complete) => handleFileChange('panCard', files, complete)}
           required
         />
@@ -66,6 +66,7 @@ const Step7Documents = () => {
         <FileUpload
           label="Aadhaar Card (Front + Back)"
           name="aadhaarCard"
+          data-testid="aadhaar"
           onChange={(files, complete) => handleFileChange('aadhaarCard', files, complete)}
           required
         />
@@ -74,6 +75,7 @@ const Step7Documents = () => {
         <FileUpload
           label="Salary Slips (Last 3 months)"
           name="salarySlips"
+          data-testid="salary"
           onChange={(files, complete) => handleFileChange('salarySlips', files, complete)}
           required
         />
@@ -82,6 +84,7 @@ const Step7Documents = () => {
         <FileUpload
           label="Bank Statements (Last 6 months)"
           name="bankStatements"
+          data-testid="bank"
           onChange={(files, complete) => handleFileChange('bankStatements', files, complete)}
           required
         />
@@ -90,6 +93,7 @@ const Step7Documents = () => {
         <FileUpload
           label="ITR (Last 2 years)"
           name="itr"
+          data-testid="itr"
           onChange={(files, complete) => handleFileChange('itr', files, complete)}
           required
         />
@@ -98,6 +102,7 @@ const Step7Documents = () => {
         <FileUpload
           label="Property Documents"
           name="propertyDocs"
+          data-testid="property"
           onChange={(files, complete) => handleFileChange('propertyDocs', files, complete)}
           required
         />
@@ -106,6 +111,7 @@ const Step7Documents = () => {
         <FileUpload
           label="Business Registration Certificate"
           name="businessReg"
+          data-testid="business-reg"
           onChange={(files, complete) => handleFileChange('businessReg', files, complete)}
           required
         />
@@ -114,6 +120,7 @@ const Step7Documents = () => {
         <FileUpload
           label="GST Returns (Last 4 quarters)"
           name="gstReturns"
+          data-testid="gst"
           onChange={(files, complete) => handleFileChange('gstReturns', files, complete)}
           required
         />
@@ -122,6 +129,7 @@ const Step7Documents = () => {
         <FileUpload
           label="Passport Size Photograph"
           name="photograph"
+          data-testid="photo"
           accept={['image/jpeg', 'image/png']}
           maxSize={2 * 1024 * 1024}
           maxFiles={1}
@@ -131,6 +139,7 @@ const Step7Documents = () => {
       )}
 
       <SignatureCanvas
+        data-testid="signature-canvas"
         onChange={(sig) => {
           setValue('eSignature', sig, { shouldValidate: true });
         }}

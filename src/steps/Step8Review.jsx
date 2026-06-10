@@ -54,6 +54,7 @@ export default function Step8Review({ onEditStep }) {
     businessName: watch('businessName'),
     coApplicantName: watch('coApplicantName'),
     coApplicantIncome: watch('coApplicantIncome'),
+    signature: watch('signature'),
   };
 
   const monthlyIncome = values.monthlyNetSalary || values.monthlyIncome || 0;
@@ -142,6 +143,20 @@ export default function Step8Review({ onEditStep }) {
           {emi > totalIncome * 0.5 && ' (Exceeds recommended 50%)'}
         </div>
       </Section>
+
+      <Section title="Signature" onEdit={() => onEditStep('signature')}>
+        <div className="text-sm font-semibold text-gray-700 mb-4">
+          {values.signature ? (
+            <img src={values.signature} alt="Signature" className="border rounded-md max-w-xs" />
+          ) : (
+            <div>
+            <img src="/placeholder-signature.png" alt="Signature" className="border rounded-md max-w-xs opacity-50" />
+            <span className="text-error">No signature captured</span>
+            </div>
+          )}
+        </div>
+      </Section>
+       
 
       {/* Consents */}
       <div className="space-y-2 border-t pt-4">

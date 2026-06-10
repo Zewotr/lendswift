@@ -2,15 +2,15 @@ import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { compressImage } from '../../utils/imageCompression';
 
-const FileUpload = ({ 
-  label, 
-  name, 
-  onChange, 
-  accept = ['image/jpeg', 'image/png', 'application/pdf'], 
-  maxSize = 5 * 1024 * 1024, 
-  maxFiles = 3, 
+const FileUpload = ({
+  label,
+  name,
+  onChange,
+  accept = ['image/jpeg', 'image/png', 'application/pdf'],
+  maxSize = 5 * 1024 * 1024,
+  maxFiles = 3,
   required = false,
-  'data-testid': dataTestId
+  'data-testid': dataTestId,
 }) => {
   const [files, setFiles] = useState([]);
   const [uploadProgress, setUploadProgress] = useState({});
@@ -31,22 +31,46 @@ const FileUpload = ({
   };
 
   const onDrop = useCallback(async (acceptedFiles, rejectedFiles) => {
+    // 1. Handle rejections from dropzone
     if (rejectedFiles.length) {
-      const rejectErrors = rejectedFiles.map(rej => ({
-        name: rej.file.name,
-        error: rej.errors[0].message,
-      }));
+      const rejectErrors = rejectedFiles.map(rej => {
+        let errorMsg = rej.errors[0].message;
+        if (rej.errors[0].code === 'file-too-large') {
+          errorMsg = `File is larger than ${maxSize / (1024 * 1024)}MB`;
+        }
+        if (rej.errors[0].code === 'file-invalid-type') {
+          errorMsg = `File type must be ${accept.join(', ')}`;
+        }
+        return { name: rej.file.name, error: errorMsg };
+      });
       setErrors(rejectErrors);
+      return;
     }
 
+    // 2. Process accepted files
     const processed = [];
     for (const file of acceptedFiles) {
+      // Manual size check (reject original if > maxSize)
+      if (file.size > maxSize) {
+        setErrors(prev => [...prev, { name: file.name, error: `File is larger than ${maxSize / (1024 * 1024)}MB` }]);
+        continue;
+      }
+      // Manual type check
+      const isTypeValid = accept.some(type => {
+        if (type.endsWith('/*')) return file.type.startsWith(type.split('/')[0]);
+        return file.type === type;
+      });
+      if (!isTypeValid) {
+        setErrors(prev => [...prev, { name: file.name, error: `File type must be ${accept.join(', ')}` }]);
+        continue;
+      }
+
       let processedFile = file;
       if (file.type.startsWith('image/')) {
         try {
           processedFile = await compressImage(file);
         } catch (err) {
-          console.error('Compression failed', err);
+         alert('Compression failed', err);
         }
       }
       processedFile.uploadId = `${name}-${Date.now()}-${Math.random()}`;
@@ -55,14 +79,14 @@ const FileUpload = ({
 
     const newFiles = [...files, ...processed].slice(0, maxFiles);
     setFiles(newFiles);
-    setErrors([]);
+    setErrors(prev => prev.filter(e => !processed.some(f => f.name === e.name)));
     onChange?.(newFiles);
 
     for (const file of processed) {
       await simulateUpload(file.uploadId);
     }
     onChange?.(newFiles, true);
-  }, [files, onChange, maxFiles, name]);
+  }, [files, onChange, maxFiles, name, maxSize, accept]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -108,11 +132,7 @@ const FileUpload = ({
           isDragActive ? 'border-primary bg-blue-50' : 'border-gray-300 hover:border-primary'
         }`}
       >
-        <input 
-          {...getInputProps()} 
-          name={name} 
-          data-testid={dataTestId || `file-${name}`}
-        />
+        <input {...getInputProps()} data-testid={dataTestId} />
         {isDragActive ? (
           <p>Drop files here...</p>
         ) : (
@@ -120,7 +140,7 @@ const FileUpload = ({
         )}
       </div>
       {errors.length > 0 && errors.map((err, i) => (
-        <div key={i} className="text-error text-sm mt-1">{err.name}: {err.error}</div>
+        <div key={i} className="text-error text-sm mt-1" role="alert">{err.name}: {err.error}</div>
       ))}
       {files.length > 0 && (
         <div className="mt-2 space-y-2">
@@ -129,7 +149,9 @@ const FileUpload = ({
               {getPreview(file)}
               <div className="flex-1">
                 <p className="text-sm font-medium">{file.name}</p>
-                <p className="text-xs text-gray-500">{(file.size / 1024).toFixed(0)} KB</p>
+                <p className="text-xs text-gray-500" data-testid={`${name}-size`}>
+                  {(file.size / 1024).toFixed(0)} KB
+                </p>
                 {uploadProgress[file.uploadId] !== undefined && uploadProgress[file.uploadId] < 100 && (
                   <div className="w-full bg-gray-200 rounded-full h-1.5 mt-1">
                     <div className="bg-primary h-1.5 rounded-full" style={{ width: `${uploadProgress[file.uploadId]}%` }} />

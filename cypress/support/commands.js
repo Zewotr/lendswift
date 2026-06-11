@@ -215,6 +215,7 @@ Cypress.Commands.add('fillStep7', (documents) => {
     gstReturns: 'gst',
     photograph: 'photo',
     photo: 'photo',
+    signature : 'esignature',
   };
 
   documents.forEach((doc) => {
@@ -225,7 +226,7 @@ Cypress.Commands.add('fillStep7', (documents) => {
   cy.contains('Please upload all required documents and wait for upload to complete.', { timeout: 12000 })
     .should('not.exist');
 
-  cy.get('[data-testid="signature-canvas"] canvas', { timeout: 10000 })
+  cy.get(`[data-testid="signature-canvas"]`, { timeout: 10000 })
     .should('be.visible')
     .then(($canvas) => {
       cy.wrap($canvas)

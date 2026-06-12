@@ -54,7 +54,7 @@ export default function Step8Review({ onEditStep }) {
     businessName: watch('businessName'),
     coApplicantName: watch('coApplicantName'),
     coApplicantIncome: watch('coApplicantIncome'),
-    signature: watch('signature'),
+    signature: watch('esignature'),
   };
 
   const monthlyIncome = values.monthlyNetSalary || values.monthlyIncome || 0;
@@ -144,7 +144,7 @@ export default function Step8Review({ onEditStep }) {
         </div>
       </Section>
 
-      <Section title="Signature" onEdit={() => onEditStep('signature')}>
+      <Section title="Signature" onEdit={() => onEditStep('documents')}>
         <div className="text-sm font-semibold text-gray-700 mb-4">
           {values.signature ? (
             <img src={values.signature} alt="Signature" className="border rounded-md max-w-xs" />

@@ -100,7 +100,6 @@ export default function Wizard() {
       const resolver = zodResolver(schema);
       return await resolver(data, context);
     } catch (err) {
-      console.error('Resolver error:', err);
       return { values: data, errors: {} };
     }
   };

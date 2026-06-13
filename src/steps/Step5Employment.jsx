@@ -56,6 +56,8 @@ export default function Step5Employment() {
             <label key={opt.value} className="inline-flex items-center">
               <input
                 type="radio"
+                name='employmentType'
+                data-testid={opt.value}
                 value={opt.value}
                 checked={radioField.value === opt.value}
                 onChange={() => {

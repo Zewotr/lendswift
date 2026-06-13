@@ -8,7 +8,7 @@ export default function Step3KYC() {
   const aadhaarValue = watch('aadhaarNumber') || '';
 
   const panVerification = useVerification(panValue, 'PAN');
-  const aadhaarVerification = useVerification(aadhaarValue, 'AADHAAR');
+  const aadhaarVerification = useVerification(aadhaarValue, 'Aadhaar');
 
   return (
     <div className="space-y-6">

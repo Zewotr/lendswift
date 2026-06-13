@@ -11,9 +11,9 @@ export default function Step1LoanType() {
   const currentLoanType = loanType || 'personal';
 
   const loanTypeOptions = [
-    { value: 'personal', label: 'Personal Loan (up to ₹10 Lakh)' },
-    { value: 'home', label: 'Home Loan (up to ₹1 Crore)' },
-    { value: 'business', label: 'Business Loan (up to ₹50 Lakh)' },
+    { value: 'personal', label: 'Personal Loan (up to ₹10 Lakh)', 'data-testid': 'loan-type-personal' },
+    { value: 'home', label: 'Home Loan (up to ₹1 Crore)', 'data-testid': 'loan-type-home' },
+    { value: 'business', label: 'Business Loan (up to ₹50 Lakh)', 'data-testid': 'loan-type-business' },
   ];
 
   const purposeOptions = loanPurposeOptions[currentLoanType].map(opt => ({ value: opt, label: opt }));
@@ -45,6 +45,7 @@ export default function Step1LoanType() {
         label="Loan Tenure (months)"
         name="loanTenure"
         type="number"
+        data-testid="loan-tenure"
         register={register('loanTenure', { 
             required: 'Loan tenure is required', 
             valueAsNumber: true 
@@ -54,7 +55,7 @@ export default function Step1LoanType() {
         />
 
       <Select
-        key={loanType} // force remount to reset value when loan type changes
+        key={currentLoanType} // force remount to reset value when loan type changes
         label="Loan Purpose"
         name="loanPurpose"
         options={purposeOptions}

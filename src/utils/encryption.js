@@ -2,8 +2,6 @@
 const strToBuffer = (str) => new TextEncoder().encode(str);
 const bufferToStr = (buf) => new TextDecoder().decode(buf);
 
-// Generate a fixed key (in production, derive from user passphrase)
-// For this project, we use a static key derived from a passphrase.
 const getKey = async () => {
   const passphrase = 'lendswift-secure-key-2025';
   const encoder = new TextEncoder();

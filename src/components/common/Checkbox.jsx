@@ -5,9 +5,19 @@ const Checkbox = forwardRef(({
   name,
   error,
   required,
+  register,
   ...rest
 }, ref) => {
   const id = `field-${name}`;
+
+  let registration = {};
+  if (register && typeof register === 'function') {
+    registration = register(name, { required: required ? `${label} is required` : false });
+  } else if (register && typeof register === 'object') {
+    registration = register;
+  } else {
+    registration = { name };
+  }
 
   return (
     <div className="mb-4">
@@ -20,6 +30,7 @@ const Checkbox = forwardRef(({
             name={name}
             className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
             aria-describedby={error ? `${id}-error` : undefined}
+            {...registration}
             {...rest}
           />
         </div>

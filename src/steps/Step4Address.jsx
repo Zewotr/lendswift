@@ -62,6 +62,7 @@ export default function Step4Address() {
       <Input
         label="PIN Code"
         name="currentPinCode"
+        data-testid="current-pin-code"
         type="text"
         register={register('currentPinCode', {
           required: 'PIN code required',
@@ -74,6 +75,7 @@ export default function Step4Address() {
       <Input
         label="City"
         name="currentCity"
+        data-testid="current-city"
         register={register('currentCity', { required: 'City required' })}
         error={errors.currentCity?.message}
         required
@@ -81,6 +83,7 @@ export default function Step4Address() {
       <Input
         label="State"
         name="currentState"
+        data-testid="current-state"
         register={register('currentState', { required: 'State required' })}
         error={errors.currentState?.message}
         required
@@ -139,9 +142,10 @@ export default function Step4Address() {
           />
           <Input
             label="Previous PIN Code"
-            name="prevPinCode"
+            name="PinCode"
+            data-testid="previous-pin-code"
             type="text"
-            register={register('prevPinCode', { pattern: /^\d{6}$/, message: '6 digits' })}
+            register={register('PinCode', { pattern: /^\d{6}$/, message: '6 digits' })}
             error={errors.prevPinCode?.message}
           />
         </div>

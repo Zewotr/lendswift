@@ -5,17 +5,16 @@ export default function Step2PersonalInfo() {
   const { register, formState: { errors }, watch } = useFormContext();
   const primaryMobile = watch('mobileNumber');
 
-  const genderOptions = [
-    { value: 'male', label: 'Male' },
-    { value: 'female', label: 'Female' },
-    { value: 'other', label: 'Other' },
-  ];
-
   const maritalOptions = [
     { value: 'single', label: 'Single' },
     { value: 'married', label: 'Married' },
     { value: 'divorced', label: 'Divorced' },
     { value: 'widowed', label: 'Widowed' },
+  ];
+  const genderOptions = [
+    { value: 'male', label: 'Male' },
+    { value: 'female', label: 'Female' },
+    { value: 'other', label: 'Other' },
   ];
 
   return (
@@ -36,6 +35,7 @@ export default function Step2PersonalInfo() {
         error={errors.dateOfBirth?.message}
         required
         helpText="You must be 21–65 years old"
+        
       />
 
       <RadioGroup

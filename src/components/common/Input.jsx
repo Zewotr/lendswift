@@ -37,12 +37,14 @@ const Input = forwardRef(({
         type={type}
         placeholder={placeholder}
         aria-invalid={!!error}
+        aria-required={required}
         aria-describedby={error ? `${id}-error` : helpText ? `${id}-help` : undefined}
         className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary ${
           error ? 'border-error' : 'border-gray-300'
         }`}
         {...registration}
         {...rest}
+
       />
       {helpText && !error && (
         <p id={`${id}-help`} className="mt-1 text-xs text-gray-500">{helpText}</p>

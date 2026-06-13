@@ -34,6 +34,7 @@ const Select = forwardRef(({
         ref={ref}
         id={id}
         name={name}
+        aria-required={required}
         className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary ${
           error ? 'border-error' : 'border-gray-300'
         }`}

@@ -6,19 +6,9 @@ Features real‑time validation, conditional fields, document upload with compre
 [![Cypress Tests](https://img.shields.io/badge/tests-27%20passing-brightgreen)](https://github.com/Zewotr/MULTI-STEP-LOAN-APPLICATION-FORM.git)
 [![Accessibility](https://img.shields.io/badge/a11y-92%20(Lighthouse)-green)]()
 
-## 🚀 Live Demo (if deployed)
-[Insert your Vercel/Netlify URL here]
-
-## 📋 Table of Contents
-- [Project Description](#project-description)
-- [Architecture Decisions](#architecture-decisions)
-- [Tech Stack](#tech-stack)
-- [Setup Instructions](#setup-instructions)
-- [Running Tests](#running-tests)
-- [Screenshots](#screenshots)
-- [Known Limitations](#known-limitations)
-- [Future Improvements](#future-improvements)
-
+## 🚀 Live Demo 
+ https://lendswift.netlify.app/
+ 
 ---
 
 ## 📖 Project Description
@@ -94,6 +84,21 @@ git clone https://github.com/Zewotr/MULTI-STEP-LOAN-APPLICATION-FORM.git
 cd loan-application
 npm install
 
-
+```
 ## some screen shots
+<img width="1308" height="697" alt="image" src="https://github.com/user-attachments/assets/a781c01a-222c-400d-8bf8-fa4f2298d6d9" />
+<img width="1294" height="692" alt="Screenshot from 2026-06-13 20-50-40" src="https://github.com/user-attachments/assets/98530760-3437-4233-8897-e48e431ff8aa" />
+<img width="1016" height="691" alt="Screenshot from 2026-06-13 20-51-15" src="https://github.com/user-attachments/assets/d3ea8c91-7fad-4fc0-9d30-022cae3b06c4" />
+<img width="1016" height="691" alt="Screenshot from 2026-06-13 20-51-29" src="https://github.com/user-attachments/assets/4e541c61-763d-47b4-8161-abf47ee32d62" />
+<img width="1016" height="691" alt="Screenshot from 2026-06-13 20-51-53" src="https://github.com/user-attachments/assets/dcb04f55-8398-4ac8-b9e4-5975251a2afb" />
 
+<img width="1016" height="691" alt="Screenshot from 2026-06-13 20-51-53" src="https://github.com/user-attachments/assets/2bad5df0-ad14-4ce6-b311-8e1c17affd0b" />
+<img width="1016" height="691" alt="Screenshot from 2026-06-13 20-52-01" src="https://github.com/user-attachments/assets/2664cd74-b9d0-4d50-8dc1-6c1c2e8a3080" />
+<img width="999" height="696" alt="Screenshot from 2026-06-13 20-52-20" src="https://github.com/user-attachments/assets/6713e78a-72b3-4610-a0ce-c70e5fd2f617" />
+
+<img width="999" height="696" alt="Screenshot from 2026-06-13 21-12-18" src="https://github.com/user-attachments/assets/0519ed95-3b9a-4ed5-9c47-fc0bc4417211" />
+<img width="999" height="696" alt="Screenshot from 2026-06-13 21-12-07" src="https://github.com/user-attachments/assets/ec214886-02e6-4d82-a7b1-f3c5eed81ba6" />
+<img width="1013" height="697" alt="Screenshot from 2026-06-13 21-13-42" src="https://github.com/user-attachments/assets/383742a9-b1a6-47f4-b41c-ad64a5b29fbf" />
+<img width="919" height="698" alt="Screenshot from 2026-06-13 21-14-27" src="https://github.com/user-attachments/assets/c12bef88-b425-41c2-bc8d-61293954eae0" />
+<img width="919" height="698" alt="Screenshot from 2026-06-13 21-14-38" src="https://github.com/user-attachments/assets/77b2ad27-b3cb-494a-a8de-dd298bba3fbf" />
+<img width="1308" height="697" alt="image" src="https://github.com/user-attachments/assets/aeb2fd99-fe75-48f3-9521-f995494b4f81" />

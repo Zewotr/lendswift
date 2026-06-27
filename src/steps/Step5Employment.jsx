@@ -26,10 +26,6 @@ export default function Step5Employment() {
   const employmentType = watch('employmentType'); // also watch directly
   const loanType = watch('loanType');
 
-  // Debug
-  useEffect(() => {
-    console.log('Employment type changed to:', employmentType);
-  }, [employmentType]);
 
   // Cross-step: Business Loan forces Self-Employed or Business Owner
   useEffect(() => {

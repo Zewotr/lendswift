@@ -17,10 +17,8 @@ export const useAutoSave = (formData, currentStep, interval = 30000) => {
       try {
         const encrypted = await encryptData(saveObject);
         localStorage.setItem('lendswift_draft', encrypted);
-        console.log('Auto-saved at', new Date().toLocaleTimeString());
-        // Optional: show toast notification
+        
       } catch (err) {
-        console.error('Auto-save failed', err);
       }
     }, interval);
     return () => clearTimeout(timerRef.current);

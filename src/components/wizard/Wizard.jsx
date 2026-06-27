@@ -76,9 +76,8 @@ export default function Wizard() {
     try {
       const encrypted = await encryptData(saveObject);
       localStorage.setItem('lendswift_draft', encrypted);
-      console.log('Manual save on step change');
     } catch (err) {
-      console.error('Manual save failed', err);
+
     }
   };
 
@@ -149,7 +148,6 @@ export default function Wizard() {
         setSavedDraft(decrypted);
         setShowResumeModal(true);
       } catch (err) {
-        console.error('Failed to load draft', err);
         localStorage.removeItem('lendswift_draft');
       }
     };
@@ -178,7 +176,6 @@ export default function Wizard() {
 
     if (isLastStep) {
       handleSubmit((data) => {
-        console.log('Final submission:', data);
         alert('Application submitted!');
         localStorage.removeItem('lendswift_draft');
       })();
